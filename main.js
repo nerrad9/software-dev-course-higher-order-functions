@@ -43,6 +43,16 @@ Step-by-Step:
 2. Use the `filter()` method to apply the callback to the array.
 3. Return the filtered result.
 */
+function filterProducts(prods, call){
+  return prods.filter(call)
+}
+
+avail = filterProducts(products, p => p.inStock)
+console.log(avail)
+cheap = filterProducts(products, p => p.price <= 500)
+console.log(cheap)
+console.log(filterProducts(filterProducts(products, p => p.price <= 500), p => p.inStock))
+console.log(filterProducts(filterProducts(products, p => p.price <= 500), p => p.inStock))
 
 
 /*
@@ -55,6 +65,9 @@ Step-by-Step:
 2. Extract and transform the `name` property to uppercase.
 3. Store the result in a new variable.
 */
+const upNames = products.map(prod => {return prod.name.toUpperCase()})
+console.log(upNames)
+
 
 
 /*
@@ -70,7 +83,13 @@ Step-by-Step:
 3. Use this returned function inside a `forEach()` call to add a new property, `salePrice`, to each product object.
 4. Print the array of products to verify the new property and value have been added to each product object.
 */
-
+function applyDiscount(dis){
+  return function(prod){return (prod.price * (1 - (dis/100)))}
+}
+const die = applyDiscount(-50)
+newP = [...products]
+newP.forEach(prod=>{prod.salePrice = die(prod)})
+console.log(newP)
 
 /*
 🔹 Task 4: Calculate Total Inventory Value
@@ -82,13 +101,12 @@ Step-by-Step:
 2. Add only the prices of products where `inStock` is true.
 3. Store the total in a new variable.
 */
+total = products.reduce((acc,prod) => {
+  if(prod.inStock){
+    return acc + prod.price
+  }return acc},0)
+console.log(total)
 
+a = products.reduce((acc,prod) => acc + (prod.price * prod.inStock), 0)
+console.log(a)
 
-// ============================================
-// 🧪 Console Test Your Work
-// ============================================
-
-// console.log("Filtered products:", ...);
-// console.log("Uppercased names:", ...);
-// console.log("Discounted products:", ...);
-// console.log("Total value in stock:", ...);
